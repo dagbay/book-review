@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Book extends Model
 {
@@ -11,5 +13,9 @@ class Book extends Model
 
     public function reviews() {
         return $this->hasMany(Review::class);
+    }
+
+    public function scopeTitle(Builder $query, string $title) : Builder {
+        return $query->where('title', 'LIKE', "%$title%");
     }
 }
